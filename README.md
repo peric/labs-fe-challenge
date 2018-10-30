@@ -12,7 +12,8 @@ This screen will display data retrieved from https://jsonplaceholder.typicode.co
 Data received should be filtered so that only posts with an odd ID remain.
 Data should also be modified so that the "title" property text value is all uppercase.
 
-Modified data should be presented in the form of a list. The list should comprise of two components, one for the list itself, and one for the items in it.
+Modified data should be presented in the form of a list.
+The list should comprise of two components, one for the list itself, and one for the items in it.
 
 This screen should also contain a refresh button. By clicking on this button the data should be reloaded. 
 (Note: if multiple clicks in rapid succession occur on the refresh button, only the last value returned should be used, other values should be discarded.)
