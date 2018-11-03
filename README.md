@@ -1,32 +1,27 @@
-# Show me the knowledge :)
+# LabsFeChallenge
 
-Create an application that will have two screens (each on it's own route). 
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.
 
-## Home Screen (primary screen)
-This screen will be the welcome screen, and will display some text "Hello, my name is [YOUR_NAME]".   
-The text should be in its own component. The component should have an interval set that will change the colour of the text every second (use RxJS for this task).  
-Colours should be selected from a pool of 5 colours (hard-coded) randomly.  
+## Development server
 
-## Content Screen
-This screen will display data retrieved from https://jsonplaceholder.typicode.com/posts.  
-Data received should be filtered so that only posts with an odd ID remain.  
-Data should also be modified so that the "title" property text value is all uppercase.  
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-Modified data should be presented in the form of a list.  
-The list should comprise of two components, one for the list itself, and one for the items in it.  
+## Code scaffolding
 
-This screen should also contain a refresh button. By clicking on this button the data should be reloaded.  
-(Note: if multiple clicks in rapid succession occur on the refresh button, only the last value returned should be used, other values should be discarded.)  
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Style
-You can either write your own CSS/SCSS, or you can use one of many CSS frameworks.  
-The only requirement is that the application looks decent :). 
+## Build
 
-## Other
-Create the project using Angular CLI. 
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-Write basic (unit) tests.
+## Running unit tests
 
-Utilize RxJs as much as possible. 
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-Once finished push the project to this repository (create a new PR) and request a review. 
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
