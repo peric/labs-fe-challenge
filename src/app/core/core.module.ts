@@ -25,4 +25,5 @@ import { ErrorsHandler } from './errors-handler';
     }
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}
