@@ -1,12 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 
 import { LoaderService } from './loader.service';
+import { LoaderState } from './loader';
 
 describe('LoaderService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let loaderService: LoaderService;
 
-  it('should be created', () => {
-    const service: LoaderService = TestBed.get(LoaderService);
-    expect(service).toBeTruthy();
+  beforeEach(() => TestBed.configureTestingModule({ providers: [LoaderService] }));
+
+  it('loader should be shown', () => {
+    loaderService = TestBed.get(LoaderService);
+
+    loaderService.loaderState.subscribe((state: LoaderState) => {
+      expect(state.show).toBeTruthy();
+    });
+
+    loaderService.show();
+  });
+
+  it('loader should be hidden', () => {
+    loaderService = TestBed.get(LoaderService);
+
+    loaderService.loaderState.subscribe((state: LoaderState) => {
+      expect(state.show).toBeFalsy();
+    });
+
+    loaderService.hide();
   });
 });
