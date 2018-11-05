@@ -1,5 +1,10 @@
-.refresh-button {
-  top: 0;
-  right: 0;
-  position: absolute;
+.mat-tab-link {
+  height: 44px;
+
+  &.refresh-button {
+    top: 0;
+    right: 0;
+    position: absolute;
+  }
 }
+
