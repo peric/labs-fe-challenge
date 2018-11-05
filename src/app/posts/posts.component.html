@@ -1,0 +1,9 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link *ngFor="let type of types" routerLink="/posts" [queryParams]="{show: type}"
+     [active]="activeType === type">{{type | capitalize}}</a>
+  <a mat-tab-link class="refresh-button" (click)="refresh()" [active]="activeType === type"
+     title="Click to reload the data">
+    <mat-icon>refresh</mat-icon>
+  </a>
+</nav>
+<app-posts-list [posts]="filteredPosts"></app-posts-list>

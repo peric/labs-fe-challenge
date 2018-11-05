@@ -1,0 +1,6 @@
+<nav mat-tab-nav-bar backgroundColor="primary">
+  <a mat-tab-link *ngFor="let navItem of navItems" routerLink="{{navItem.url}}" [active]="navItem.url == currentUrl">
+    <mat-icon>{{navItem.icon}}</mat-icon>
+    <span>&nbsp;{{navItem.title}}</span>
+  </a>
+</nav>
