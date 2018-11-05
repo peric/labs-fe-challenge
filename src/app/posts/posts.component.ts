@@ -18,7 +18,7 @@ export class PostsComponent implements OnInit {
 
   activeType: string = this.typeAll;
 
-  posts: Post[];
+  posts: Post[] = [];
 
   constructor(private postsService: PostsService, private activatedRoute: ActivatedRoute) {
   }
@@ -69,8 +69,6 @@ export class PostsComponent implements OnInit {
     }
 
     this.postsService.getPosts()
-      .subscribe(posts => {
-        this.filterPosts(posts);
-      });
+      .subscribe(posts => this.filterPosts(posts));
   }
 }
