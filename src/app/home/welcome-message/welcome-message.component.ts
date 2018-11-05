@@ -21,7 +21,7 @@ export class WelcomeMessageComponent implements OnInit {
     const source = interval(1000);
 
     source.subscribe((seconds) => {
-      this.currentColorIndex = seconds % this.colors.length;
+      this.currentColorIndex = (seconds + 1) % this.colors.length;
       this.currentColor = this.colors[this.currentColorIndex];
     });
   }
