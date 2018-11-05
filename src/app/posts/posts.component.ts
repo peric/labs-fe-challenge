@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from './posts.service';
 import { Post } from '../models/post';
 import { ActivatedRoute } from '@angular/router';
+import { fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-posts',
@@ -17,7 +19,6 @@ export class PostsComponent implements OnInit {
   activeType: string = this.typeAll;
 
   posts: Post[];
-  filteredPosts: Post[];
 
   constructor(private postsService: PostsService, private activatedRoute: ActivatedRoute) {
   }
@@ -30,34 +31,38 @@ export class PostsComponent implements OnInit {
         this.activeType = showType;
       }
 
-      this.getPosts(this.activeType);
+      this.getPosts();
     });
+
+    this.registerRefreshObservable();
   }
 
-  refresh() {
-    this.getPosts(this.activeType);
+  private registerRefreshObservable() {
+    const refreshButton = document.getElementById('refresh-button');
 
-    // TODO: remove filteredPosts
-    // TODO: refresh button + spinner - use only last value (Zip?), discard all the other
-
+    fromEvent(refreshButton, 'click')
+      .pipe(
+        debounceTime(1000)
+      )
+      .subscribe(() => this.getPosts());
   }
 
-  private filterPosts(type: string) {
-    switch (type) {
+  private filterPosts(posts: Array) {
+    switch (this.activeType) {
       case this.typeEven:
-        this.filteredPosts = this.posts.filter(post => post.id % 2 === 0);
+        this.posts = posts.filter(post => post.id % 2 === 0);
         break;
       case this.typeOdd:
-        this.filteredPosts = this.posts.filter(post => post.id % 2 === 1);
+        this.posts = posts.filter(post => post.id % 2 === 1);
         break;
       default:
-        this.filteredPosts = this.posts;
+        this.posts = posts;
         break;
     }
   }
 
-  private getPosts(type: string): void {
-    if (this.types.indexOf(type) === -1) {
+  private getPosts(): void {
+    if (this.types.indexOf(this.activeType) === -1) {
       throw new Error('That won\'t work! Only available types are: ' + this.types.map((value) => {
         return value;
       }));
@@ -65,8 +70,7 @@ export class PostsComponent implements OnInit {
 
     this.postsService.getPosts()
       .subscribe(posts => {
-        this.posts = posts;
-        this.filterPosts(type);
+        this.filterPosts(posts);
       });
   }
 }

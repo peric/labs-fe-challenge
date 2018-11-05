@@ -16,18 +16,16 @@ export class PostsService {
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.postsUrl)
       .pipe(
-        map( response => {
+        map(response => {
           return response.map((post) => {
             return new Post(post.id, post.userId, post.title, post.body);
           });
         }),
-        catchError(this.handleError('getPosts', []))
+        catchError(this.handleError('getPosts', [])),
       );
   }
 
-  // TODO: copy handleError
-
-  // TODO: debounce requests
+  // TODO: copy handleError or implement a new one
 
   getPost(id: number) {
     return this.http.get<Post[]>(`${this.postsUrl}/${id}`)
@@ -38,11 +36,7 @@ export class PostsService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
-      // TODO: external helper for logs
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      console.error(error);
 
       // TODO: better job of transforming error for user consumption
       // this.log(`${operation} failed: ${error.message}`);

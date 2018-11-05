@@ -8,11 +8,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
+import { LoaderComponent } from './loader/loader.component';
+import { PostsService } from '../posts/posts.service';
+import { LoaderService } from './loader/loader.service';
+import { httpInterceptorProviders } from './interceptors';
 
 @NgModule({
   declarations: [
     NavComponent,
-    CapitalizePipe
+    LoaderComponent,
+    CapitalizePipe,
+    LoaderComponent
   ],
   exports: [
     BrowserAnimationsModule,
@@ -27,6 +33,7 @@ import { NavComponent } from './nav/nav.component';
     MatTabsModule,
     MatProgressBarModule,
     NavComponent,
+    LoaderComponent,
     CapitalizePipe,
   ],
   imports: [
@@ -42,6 +49,10 @@ import { NavComponent } from './nav/nav.component';
     MatTabsModule,
     MatProgressBarModule,
   ],
+  providers: [
+    httpInterceptorProviders,
+    LoaderService,
+  ]
 })
 export class SharedModule {
 }
