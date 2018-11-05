@@ -1,5 +1,7 @@
 # LabsFeChallenge
 
+[![CircleCI](https://circleci.com/gh/peric/labs-fe-challenge.svg?style=svg)](https://circleci.com/gh/peric/labs-fe-challenge)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.4.
 
 ## Development server
