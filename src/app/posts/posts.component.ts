@@ -47,7 +47,7 @@ export class PostsComponent implements OnInit {
       .subscribe(() => this.getPosts());
   }
 
-  private filterPosts(posts: Array) {
+  private filterPosts(posts: Array<Post>) {
     switch (this.activeType) {
       case this.typeEven:
         this.posts = posts.filter(post => post.id % 2 === 0);
