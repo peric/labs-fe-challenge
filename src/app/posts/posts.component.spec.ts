@@ -52,13 +52,10 @@ describe('PostsComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('default active type should be set to all', () => {
-    expect(component.activeType).toEqual('all');
-  });
-
   it('should load only odd posts after Angular calls ngOnInit', () => {
+    expect(component.activeType).toEqual('all');
     expect(component.posts.length).toEqual(0);
-    component.ngOnInit();
+    fixture.detectChanges();
     expect(component.activeType).toEqual('odd');
     expect(component.posts.length).toEqual(1);
     expect(component.posts[0].title).toEqual('First post');
