@@ -8,7 +8,7 @@ describe('LoaderService', () => {
 
   beforeEach(() => TestBed.configureTestingModule({ providers: [LoaderService] }));
 
-  it('loader should be shown', () => {
+  it('should be shown', () => {
     loaderService = TestBed.get(LoaderService);
 
     loaderService.loaderState.subscribe((state: LoaderState) => {
@@ -18,7 +18,7 @@ describe('LoaderService', () => {
     loaderService.show();
   });
 
-  it('loader should be hidden', () => {
+  it('should be hidden', () => {
     loaderService = TestBed.get(LoaderService);
 
     loaderService.loaderState.subscribe((state: LoaderState) => {

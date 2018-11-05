@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { LoaderService } from './loader.service';
 import { LoaderState } from './loader';
 
@@ -10,13 +9,11 @@ import { LoaderState } from './loader';
 export class LoaderComponent implements OnInit {
   show: boolean = false;
 
-  private subscription: Subscription;
-
   constructor(private loaderService: LoaderService) {
   }
 
   ngOnInit() {
-    this.subscription = this.loaderService.loaderState
+    this.loaderService.loaderState
       .subscribe((state: LoaderState) => {
         this.show = state.show;
       });
