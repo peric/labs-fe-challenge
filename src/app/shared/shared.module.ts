@@ -8,20 +8,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
-import { LoaderComponent } from './loader/loader.component';
-import { PostsService } from '../posts/posts.service';
-import { LoaderService } from './loader/loader.service';
-import { httpInterceptorProviders } from './interceptors';
+import { LoaderService } from '../core/loader/loader.service';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
     NavComponent,
-    LoaderComponent,
     CapitalizePipe,
-    LoaderComponent
   ],
   exports: [
     BrowserAnimationsModule,
+    CoreModule,
     BrowserModule,
     CommonModule,
     FormsModule,
@@ -31,13 +28,12 @@ import { httpInterceptorProviders } from './interceptors';
     HttpClientModule,
     MatIconModule,
     MatTabsModule,
-    MatProgressBarModule,
     NavComponent,
-    LoaderComponent,
     CapitalizePipe,
   ],
   imports: [
     BrowserAnimationsModule,
+    CoreModule,
     BrowserModule,
     CommonModule,
     FormsModule,
@@ -47,10 +43,8 @@ import { httpInterceptorProviders } from './interceptors';
     HttpClientModule,
     MatIconModule,
     MatTabsModule,
-    MatProgressBarModule,
   ],
   providers: [
-    httpInterceptorProviders,
     LoaderService,
   ]
 })
