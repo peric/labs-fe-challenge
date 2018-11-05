@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Post } from '../models/post';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ export class PostsService {
       );
   }
 
-  getPost(id: number) {
-    return this.http.get<Post[]>(`${this.postsUrl}/${id}`);
+  getPost(id: number): Observable<Post> {
+    return this.http.get<Post>(`${this.postsUrl}/${id}`);
   }
 }
