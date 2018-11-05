@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { httpInterceptorProviders } from './interceptors';
 import { LoaderComponent } from './loader/loader.component';
 import { MatProgressBarModule } from '@angular/material';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorsHandler } from './errors-handler';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,11 @@ import { MatProgressBarModule } from '@angular/material';
     MatProgressBarModule,
   ],
   providers: [
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    {
+      provide: ErrorHandler,
+      useClass: ErrorsHandler,
+    }
   ]
 })
 export class CoreModule { }
