@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { WelcomeMessageComponent } from './welcome-message.component';
+import { SharedModule } from '../../shared/shared.module';
 
 describe('WelcomeMessageComponent', () => {
   let component: WelcomeMessageComponent;
@@ -8,18 +9,37 @@ describe('WelcomeMessageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WelcomeMessageComponent ]
+      declarations: [
+        WelcomeMessageComponent
+      ],
+      imports: [
+        SharedModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WelcomeMessageComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('welcome message should be shown', () => {
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.welcome-text').innerText).toEqual('Hello, my name is Dražen!');
   });
+
+  it('color should change every second', fakeAsync(() => {
+    fixture.detectChanges();
+    expect(component.currentColor).toEqual('#000000');
+    tick(1000);
+    expect(component.currentColor).toEqual('#E27D60');
+    tick(1000);
+    expect(component.currentColor).toEqual('#85DCBA');
+    tick(1000);
+    expect(component.currentColor).toEqual('#E8A87C');
+    tick(1000);
+    expect(component.currentColor).toEqual('#3F51B5');
+    fixture.detectChanges();
+  }));
 });
