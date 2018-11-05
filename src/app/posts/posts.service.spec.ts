@@ -1,6 +1,5 @@
 import { PostsService } from './posts.service';
 import { Post } from '../models/post';
-import { Author } from '../models/author';
 import { of } from 'rxjs';
 
 describe('PostsService', () => {
@@ -15,8 +14,8 @@ describe('PostsService', () => {
   it('getPosts should return expected posts', () => {
     const expectedPosts: Post[] =
       [
-        { id: 1, userId: 1, title: 'First post', body: 'My body is my temple.', author: new Author(1, 'Greatest Author') },
-        { id: 2, userId: 2, title: 'Second post', body: 'My body is my temple.', author: new Author(2, 'Bad Author') }
+        new Post(1, 1, 'First post', 'My body is my temple'),
+        new Post(2, 1, 'Second post', 'My body is my temple'),
       ];
 
     httpClientSpy.get.and.returnValue(of(expectedPosts));

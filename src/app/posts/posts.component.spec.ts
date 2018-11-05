@@ -66,16 +66,13 @@ describe('PostsComponent', () => {
 
   it('Posts should be refreshed after one second of peace', fakeAsync(() => {
     fixture.detectChanges();
-
     const refreshButton = fixture.nativeElement.querySelector('#refresh-button');
     component.posts = [];
-
     refreshButton.click();
     tick(100);
     refreshButton.click();
     tick(100);
     refreshButton.click();
-
     expect(component.posts.length).toEqual(0);
     tick(1000);
     expect(component.posts.length).toEqual(1);
