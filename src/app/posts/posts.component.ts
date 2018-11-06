@@ -3,7 +3,7 @@ import { PostsService } from './posts.service';
 import { Post } from '../models/post';
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-posts',
@@ -32,6 +32,12 @@ export class PostsComponent implements OnInit {
         this.activeType = showType;
       }
 
+      if (this.types.indexOf(this.activeType) === -1) {
+        throw new Error('That won\'t work! Only available types are: ' + this.types.map((value) => {
+          return value;
+        }));
+      }
+
       this.getPosts();
     });
 
@@ -43,9 +49,13 @@ export class PostsComponent implements OnInit {
 
     fromEvent(refreshButton, 'click')
       .pipe(
-        debounceTime(500)
+        debounceTime(500),
+        switchMap(() => this.postsService.getPosts())
       )
-      .subscribe(() => this.getPosts());
+      .subscribe(posts => {
+        this.posts = posts;
+        this.filteredPosts = this.getFilteredPosts(posts);
+      });
   }
 
   private getFilteredPosts(posts: Array<Post>): Array<Post> {
@@ -67,12 +77,6 @@ export class PostsComponent implements OnInit {
   }
 
   private getPosts(): void {
-    if (this.types.indexOf(this.activeType) === -1) {
-      throw new Error('That won\'t work! Only available types are: ' + this.types.map((value) => {
-        return value;
-      }));
-    }
-
     this.postsService.getPosts()
       .subscribe((posts) => {
         this.posts = posts;
