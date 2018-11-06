@@ -19,12 +19,9 @@ export class WelcomeMessageComponent implements OnInit {
   ngOnInit() {
     this.currentColor = this.colors[this.currentColorIndex];
 
-    const colorChangeObservable = interval(1000)
-      .pipe(
-        publish()
-      );
+    const colorChangeObservable = publish()(interval(1000));
 
-    colorChangeObservable.subscribe((seconds) => {
+    colorChangeObservable.subscribe((seconds: number) => {
       this.currentColorIndex = (seconds + 1) % this.colors.length;
       this.currentColor = this.colors[this.currentColorIndex];
     });

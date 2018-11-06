@@ -45,14 +45,13 @@ export class PostsComponent implements OnInit {
   private registerRefreshObservable() {
     const refreshButton = document.getElementById('refresh-button');
 
-    const refreshButtonObservable = fromEvent(refreshButton, 'click')
+    const refreshButtonObservable = publish()(fromEvent(refreshButton, 'click')
       .pipe(
         debounceTime(500),
-        switchMap(() => this.postsService.getPosts()),
-        publish(),
-      );
+        switchMap(() => this.postsService.getPosts())
+      ));
 
-    refreshButtonObservable.subscribe(posts => {
+    refreshButtonObservable.subscribe((posts: Post[]) => {
       this.posts = posts;
       this.filteredPosts = this.getFilteredPosts(posts);
     });
