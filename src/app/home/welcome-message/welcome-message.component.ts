@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
+import { publish } from 'rxjs/operators';
 
 @Component({
   selector: 'app-welcome-message',
@@ -18,11 +19,16 @@ export class WelcomeMessageComponent implements OnInit {
   ngOnInit() {
     this.currentColor = this.colors[this.currentColorIndex];
 
-    const source = interval(1000);
+    const colorChangeObservable = interval(1000)
+      .pipe(
+        publish()
+      );
 
-    source.subscribe((seconds) => {
+    colorChangeObservable.subscribe((seconds) => {
       this.currentColorIndex = (seconds + 1) % this.colors.length;
       this.currentColor = this.colors[this.currentColorIndex];
     });
+
+    colorChangeObservable.connect();
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavItem } from '../../models/nav-item';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, publish } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav',
@@ -17,7 +17,8 @@ export class NavComponent implements OnInit {
   constructor(private router: Router) {
     // New Observable that publishes only the NavigationEnd event
     this.navEnd = router.events.pipe(
-      filter(evt => evt instanceof NavigationEnd)
+      filter(evt => evt instanceof NavigationEnd),
+      publish()
     ) as Observable<NavigationEnd>;
   }
 
@@ -26,5 +27,7 @@ export class NavComponent implements OnInit {
     this.navItems.push(new NavItem('Posts', '/posts', 'library_books'));
 
     this.navEnd.subscribe(event => this.currentUrl = event.url.split('?')[0]);
+
+    this.navEnd.connect();
   }
 }

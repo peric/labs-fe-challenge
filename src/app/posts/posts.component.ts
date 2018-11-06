@@ -3,7 +3,7 @@ import { PostsService } from './posts.service';
 import { Post } from '../models/post';
 import { ActivatedRoute } from '@angular/router';
 import { fromEvent } from 'rxjs';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { debounceTime, publish, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-posts',
@@ -45,15 +45,19 @@ export class PostsComponent implements OnInit {
   private registerRefreshObservable() {
     const refreshButton = document.getElementById('refresh-button');
 
-    fromEvent(refreshButton, 'click')
+    const refreshButtonObservable = fromEvent(refreshButton, 'click')
       .pipe(
         debounceTime(500),
-        switchMap(() => this.postsService.getPosts())
-      )
-      .subscribe(posts => {
-        this.posts = posts;
-        this.filteredPosts = this.getFilteredPosts(posts);
-      });
+        switchMap(() => this.postsService.getPosts()),
+        publish(),
+      );
+
+    refreshButtonObservable.subscribe(posts => {
+      this.posts = posts;
+      this.filteredPosts = this.getFilteredPosts(posts);
+    });
+
+    refreshButtonObservable.connect();
   }
 
   private getFilteredPosts(posts: Array<Post>): Array<Post> {
