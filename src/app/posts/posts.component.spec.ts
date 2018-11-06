@@ -57,23 +57,25 @@ describe('PostsComponent', () => {
     expect(component.posts.length).toEqual(0);
     fixture.detectChanges();
     expect(component.activeType).toEqual('odd');
-    expect(component.posts.length).toEqual(1);
-    expect(component.posts[0].title).toEqual('First post');
+    expect(component.posts.length).toEqual(2);
+    expect(component.filteredPosts.length).toEqual(1);
+    expect(component.filteredPosts[0].title).toEqual('First post');
   });
 
   it('posts should be refreshed after one second of peace', fakeAsync(() => {
     fixture.detectChanges();
     const refreshButton = fixture.nativeElement.querySelector('#refresh-button');
     component.posts = [];
+    component.filteredPosts = [];
     refreshButton.click();
     tick(100);
     refreshButton.click();
     tick(100);
     refreshButton.click();
-    expect(component.posts.length).toEqual(0);
     tick(1000);
     fixture.detectChanges();
-    expect(component.posts.length).toEqual(1);
+    expect(component.posts.length).toEqual(2);
+    expect(component.filteredPosts.length).toEqual(1);
   }));
 
   it('should change activeType and refresh proper posts', fakeAsync(() => {
@@ -86,8 +88,9 @@ describe('PostsComponent', () => {
     tick(1000);
     fixture.detectChanges();
 
-    expect(component.posts.length).toEqual(1);
-    expect(component.posts[0].title).toEqual('Second post');
+    expect(component.posts.length).toEqual(2);
+    expect(component.filteredPosts.length).toEqual(1);
+    expect(component.filteredPosts[0].title).toEqual('Second post');
 
     component.activeType = 'all';
     refreshButton.click();
@@ -95,7 +98,8 @@ describe('PostsComponent', () => {
     fixture.detectChanges();
 
     expect(component.posts.length).toEqual(2);
-    expect(component.posts[0].title).toEqual('First post');
+    expect(component.filteredPosts.length).toEqual(2);
+    expect(component.filteredPosts[0].title).toEqual('First post');
 
     component.activeType = 'nonexistent';
     expect(function () {

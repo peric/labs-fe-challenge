@@ -19,6 +19,7 @@ export class PostsComponent implements OnInit {
   activeType: string = this.typeAll;
 
   posts: Post[] = [];
+  filteredPosts: Post[] = [];
 
   constructor(private postsService: PostsService, private activatedRoute: ActivatedRoute) {
   }
@@ -47,18 +48,22 @@ export class PostsComponent implements OnInit {
       .subscribe(() => this.getPosts());
   }
 
-  private filterPosts(posts: Array<Post>) {
+  private getFilteredPosts(posts: Array<Post>): Array<Post> {
+    let filteredPosts: Array<Post> = [];
+
     switch (this.activeType) {
       case this.typeEven:
-        this.posts = posts.filter(post => post.id % 2 === 0);
+        filteredPosts = posts.filter(post => post.id % 2 === 0);
         break;
       case this.typeOdd:
-        this.posts = posts.filter(post => post.id % 2 === 1);
+        filteredPosts = posts.filter(post => post.id % 2 === 1);
         break;
       default:
-        this.posts = posts;
+        filteredPosts = posts;
         break;
     }
+
+    return filteredPosts;
   }
 
   private getPosts(): void {
@@ -69,6 +74,9 @@ export class PostsComponent implements OnInit {
     }
 
     this.postsService.getPosts()
-      .subscribe(posts => this.filterPosts(posts));
+      .subscribe((posts) => {
+        this.posts = posts;
+        this.filteredPosts = this.getFilteredPosts(posts);
+      });
   }
 }
