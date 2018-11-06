@@ -39,7 +39,6 @@ describe('PostsService', () => {
 
     postsService.getPost(1).subscribe(
       (post) => {
-        console.log(post);
         expect(post.title).toEqual('First post');
       },
       fail

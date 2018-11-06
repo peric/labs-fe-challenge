@@ -19,7 +19,7 @@ class PostsServiceMock {
   getPosts(): Observable<Post[]> {
     return of([
       new Post(1, 1, 'First post', 'Awesome text'),
-      new Post(2, 1, 'Second post', 'Awesome text'),
+      new Post(2, 11, 'Second post', 'Awesome text'),
     ]);
   }
 }
@@ -61,7 +61,7 @@ describe('PostsComponent', () => {
     expect(component.posts[0].title).toEqual('First post');
   });
 
-  it('Posts should be refreshed after one second of peace', fakeAsync(() => {
+  it('posts should be refreshed after one second of peace', fakeAsync(() => {
     fixture.detectChanges();
     const refreshButton = fixture.nativeElement.querySelector('#refresh-button');
     component.posts = [];
@@ -72,6 +72,41 @@ describe('PostsComponent', () => {
     refreshButton.click();
     expect(component.posts.length).toEqual(0);
     tick(1000);
+    fixture.detectChanges();
     expect(component.posts.length).toEqual(1);
+  }));
+
+  it('should change activeType and refresh proper posts', fakeAsync(() => {
+    fixture.detectChanges();
+
+    const refreshButton = fixture.nativeElement.querySelector('#refresh-button');
+
+    component.activeType = 'even';
+    refreshButton.click();
+    tick(1000);
+    fixture.detectChanges();
+
+    expect(component.posts.length).toEqual(1);
+    expect(component.posts[0].title).toEqual('Second post');
+
+    component.activeType = 'all';
+    refreshButton.click();
+    tick(1000);
+    fixture.detectChanges();
+
+    expect(component.posts.length).toEqual(2);
+    expect(component.posts[0].title).toEqual('First post');
+
+    component.activeType = 'nonexistent';
+    expect(function () {
+      refreshButton.click();
+      tick(1000);
+    }).toThrow(new Error('That won\'t work! Only available types are: all,even,odd'));
+
+    try {
+      tick(1000);
+    } catch (e) {
+      // ¯\_(ツ)_/¯
+    }
   }));
 });

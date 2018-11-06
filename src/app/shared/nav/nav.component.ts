@@ -25,8 +25,6 @@ export class NavComponent implements OnInit {
     this.navItems.push(new NavItem('Home', '/', 'home'));
     this.navItems.push(new NavItem('Posts', '/posts', 'library_books'));
 
-    this.navEnd.subscribe((event) => {
-      this.currentUrl = event.url.split('?')[0];
-    });
+    this.navEnd.subscribe(event => this.currentUrl = event.url.split('?')[0]);
   }
 }
