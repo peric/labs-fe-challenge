@@ -1,21 +1,21 @@
 import { Author } from './author';
 
 export class Post {
-  constructor(id: number, userId: number, title: string, body: string) {
-    this.id = id;
-    this.userId = userId;
-    this.title = title;
-    this.body = body;
-    this.assignAuthor(userId);
-  }
-
   id: number;
   userId: number;
   title: string;
   body: string;
   author: Author;
 
-  private assignAuthor(userId: number) {
+  constructor(id: number, userId: number, title: string, body: string) {
+    this.id = id;
+    this.userId = userId;
+    this.title = title;
+    this.body = body;
+    this.author = this.findAuthor(userId);
+  }
+
+  private findAuthor(userId: number) {
     const authors: Author[] = [
       { id: 1, name: 'Buford' },
       { id: 2, name: 'Duane' },
@@ -37,6 +37,6 @@ export class Post {
       author = new Author(userId, 'Unknown');
     }
 
-    this.author = author;
+    return author;
   }
 }

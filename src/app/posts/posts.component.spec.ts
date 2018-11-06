@@ -72,7 +72,7 @@ describe('PostsComponent', () => {
     refreshButton.click();
     tick(100);
     refreshButton.click();
-    tick(1000);
+    tick(500);
     fixture.detectChanges();
     expect(component.posts.length).toEqual(2);
     expect(component.filteredPosts.length).toEqual(1);
@@ -85,7 +85,7 @@ describe('PostsComponent', () => {
 
     component.activeType = 'even';
     refreshButton.click();
-    tick(1000);
+    tick(500);
     fixture.detectChanges();
 
     expect(component.posts.length).toEqual(2);
@@ -94,7 +94,7 @@ describe('PostsComponent', () => {
 
     component.activeType = 'all';
     refreshButton.click();
-    tick(1000);
+    tick(500);
     fixture.detectChanges();
 
     expect(component.posts.length).toEqual(2);
@@ -104,11 +104,11 @@ describe('PostsComponent', () => {
     component.activeType = 'nonexistent';
     expect(function () {
       refreshButton.click();
-      tick(1000);
+      tick(500);
     }).toThrow(new Error('That won\'t work! Only available types are: all,even,odd'));
 
     try {
-      tick(1000);
+      tick(500);
     } catch (e) {
       // ¯\_(ツ)_/¯
     }

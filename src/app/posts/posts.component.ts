@@ -43,7 +43,7 @@ export class PostsComponent implements OnInit {
 
     fromEvent(refreshButton, 'click')
       .pipe(
-        debounceTime(1000)
+        debounceTime(500)
       )
       .subscribe(() => this.getPosts());
   }
