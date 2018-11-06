@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavItem } from '../../models/nav-item';
-import { ConnectableObservable, Observable } from 'rxjs';
+import { ConnectableObservable } from 'rxjs';
 import { filter, publish } from 'rxjs/operators';
 
 @Component({
@@ -16,9 +16,10 @@ export class NavComponent implements OnInit {
 
   constructor(private router: Router) {
     // New Observable that publishes only the NavigationEnd event
-    this.navEnd = publish()(router.events.pipe(
-      filter(evt => evt instanceof NavigationEnd)
-    )) as ConnectableObservable<NavigationEnd>;
+    this.navEnd = router.events.pipe(
+      filter(evt => evt instanceof NavigationEnd),
+      publish()
+    ) as ConnectableObservable<NavigationEnd>;
   }
 
   ngOnInit() {

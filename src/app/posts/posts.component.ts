@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from './posts.service';
 import { Post } from '../models/post';
 import { ActivatedRoute } from '@angular/router';
-import { fromEvent } from 'rxjs';
+import { ConnectableObservable, fromEvent } from 'rxjs';
 import { debounceTime, publish, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -45,11 +45,12 @@ export class PostsComponent implements OnInit {
   private registerRefreshObservable() {
     const refreshButton = document.getElementById('refresh-button');
 
-    const refreshButtonObservable = publish()(fromEvent(refreshButton, 'click')
+    const refreshButtonObservable = fromEvent(refreshButton, 'click')
       .pipe(
         debounceTime(500),
-        switchMap(() => this.postsService.getPosts())
-      ));
+        switchMap(() => this.postsService.getPosts()),
+        publish()
+      ) as ConnectableObservable<Post[]>;
 
     refreshButtonObservable.subscribe((posts: Post[]) => {
       this.posts = posts;

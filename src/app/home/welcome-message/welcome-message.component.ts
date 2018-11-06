@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { interval } from 'rxjs';
+import { ConnectableObservable, interval } from 'rxjs';
 import { publish } from 'rxjs/operators';
 
 @Component({
@@ -19,7 +19,10 @@ export class WelcomeMessageComponent implements OnInit {
   ngOnInit() {
     this.currentColor = this.colors[this.currentColorIndex];
 
-    const colorChangeObservable = publish()(interval(1000));
+    const colorChangeObservable = interval(1000)
+      .pipe(
+        publish()
+      ) as ConnectableObservable<number>;
 
     colorChangeObservable.subscribe((seconds: number) => {
       this.currentColorIndex = (seconds + 1) % this.colors.length;
