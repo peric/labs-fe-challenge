@@ -33,9 +33,7 @@ export class PostsComponent implements OnInit {
       }
 
       if (this.types.indexOf(this.activeType) === -1) {
-        throw new Error('That won\'t work! Only available types are: ' + this.types.map((value) => {
-          return value;
-        }));
+        this.activeType = this.typeAll;
       }
 
       this.getPosts();

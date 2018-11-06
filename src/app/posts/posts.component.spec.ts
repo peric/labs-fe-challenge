@@ -12,7 +12,7 @@ import { Post } from '../models/post';
 
 class ActivatedRouteMock {
   url: string = '/posts';
-  queryParams: Observable<Params> = of({ show: 'odd' });
+  queryParams: Observable<Params> = of({ show: 'wrong' });
 }
 
 class PostsServiceMock {
@@ -52,13 +52,13 @@ describe('PostsComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should load only odd posts after Angular calls ngOnInit', () => {
+  it('should load all posts if wrong parameter is received', () => {
     expect(component.activeType).toEqual('all');
     expect(component.posts.length).toEqual(0);
     fixture.detectChanges();
-    expect(component.activeType).toEqual('odd');
+    expect(component.activeType).toEqual('all');
     expect(component.posts.length).toEqual(2);
-    expect(component.filteredPosts.length).toEqual(1);
+    expect(component.filteredPosts.length).toEqual(2);
     expect(component.filteredPosts[0].title).toEqual('First post');
   });
 
@@ -75,13 +75,23 @@ describe('PostsComponent', () => {
     tick(500);
     fixture.detectChanges();
     expect(component.posts.length).toEqual(2);
-    expect(component.filteredPosts.length).toEqual(1);
+    expect(component.filteredPosts.length).toEqual(2);
   }));
 
   it('should change activeType and refresh proper posts', fakeAsync(() => {
     fixture.detectChanges();
 
     const refreshButton = fixture.nativeElement.querySelector('#refresh-button');
+
+
+    component.activeType = 'odd';
+    refreshButton.click();
+    tick(500);
+    fixture.detectChanges();
+
+    expect(component.posts.length).toEqual(2);
+    expect(component.filteredPosts.length).toEqual(1);
+    expect(component.filteredPosts[0].title).toEqual('First post');
 
     component.activeType = 'even';
     refreshButton.click();
@@ -100,17 +110,5 @@ describe('PostsComponent', () => {
     expect(component.posts.length).toEqual(2);
     expect(component.filteredPosts.length).toEqual(2);
     expect(component.filteredPosts[0].title).toEqual('First post');
-
-    component.activeType = 'nonexistent';
-    expect(function () {
-      refreshButton.click();
-      tick(500);
-    }).toThrow(new Error('That won\'t work! Only available types are: all,even,odd'));
-
-    try {
-      tick(500);
-    } catch (e) {
-      // ¯\_(ツ)_/¯
-    }
   }));
 });
